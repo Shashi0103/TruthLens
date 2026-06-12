@@ -10,12 +10,6 @@
 
 ---
 
-## 🚀 Live Demo
-
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://truthlens.streamlit.app)
-
----
-
 ## ✨ Features
 
 - 🧠 **5 ML Models** — SVM, LSTM, Bi-LSTM, BERT (bert-tiny), DistilBERT
