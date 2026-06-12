@@ -26,12 +26,14 @@ from nltk.corpus import stopwords
 STOPWORDS = set(stopwords.words('english'))
 
 # Load spaCy model with components disabled for speed
-# en_core_web_sm is installed via requirements.txt wheel URL for Streamlit Cloud
 try:
     nlp = spacy.load("en_core_web_sm", disable=["parser", "ner", "senter"])
 except OSError:
-    # Safe fallback: create a blank English model (no lemmatization, but won't crash)
-    nlp = spacy.blank("en")
+    # Fallback to downloading if not found (though checked previously)
+    import subprocess
+    import sys
+    subprocess.run([sys.executable, "-m", "spacy", "download", "en_core_web_sm"], stdout=subprocess.DEVNULL)
+    nlp = spacy.load("en_core_web_sm", disable=["parser", "ner", "senter"])
 
 # Set max length to handle very large articles if needed
 nlp.max_length = 2000000
