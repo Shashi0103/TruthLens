@@ -1,0 +1,226 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;600;700&display=swap');
+
+/* Main application layout adjustments */
+.stApp {
+    background: radial-gradient(circle at top right, #1a1235 0%, #0d0e15 60%, #050508 100%) !important;
+    color: #e2e8f0 !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* Sidebar styling overrides */
+section[data-testid="stSidebar"] {
+    background-color: #0b0c11 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+section[data-testid="stSidebar"] h1, section[data-testid="stSidebar"] h2 {
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 800 !important;
+}
+
+/* Custom premium card system */
+.glass-card, div[data-testid="stVerticalBlockBorder"] {
+    background: rgba(17, 20, 32, 0.55) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+    border-radius: 18px !important;
+    padding: 24px !important;
+    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.45) !important;
+    margin-bottom: 24px !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.glass-card:hover, div[data-testid="stVerticalBlockBorder"]:hover {
+    border: 1px solid rgba(139, 92, 246, 0.4) !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 15px 45px 0 rgba(139, 92, 246, 0.2) !important;
+}
+
+
+/* Hero elements and titles */
+.hero-title {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 3.5rem !important;
+    font-weight: 800 !important;
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 40%, #8b5cf6 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    margin-bottom: 0.25rem !important;
+    letter-spacing: -0.05rem !important;
+    line-height: 1.1 !important;
+}
+
+.hero-subtitle {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1.4rem !important;
+    font-weight: 300 !important;
+    color: #94a3b8 !important;
+    margin-bottom: 2rem !important;
+}
+
+.section-header {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    color: #f1f5f9 !important;
+    border-bottom: 2px solid rgba(139, 92, 246, 0.2) !important;
+    padding-bottom: 0.5rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+/* Text decoration gradients */
+.gradient-text {
+    background: linear-gradient(135deg, #00f2fe 0%, #8b5cf6 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    font-weight: bold !important;
+}
+
+/* Micro-animations and stats layouts */
+.stats-container {
+    display: flex !important;
+    gap: 16px !important;
+    width: 100% !important;
+    margin-bottom: 24px !important;
+}
+
+.stats-card {
+    flex: 1 !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    text-align: center !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+.stats-card:hover {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(0, 242, 254, 0.3) !important;
+}
+
+.stats-val {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 2.2rem !important;
+    font-weight: 800 !important;
+    color: #00f2fe !important;
+    line-height: 1.1 !important;
+    margin-bottom: 4px !important;
+}
+
+.stats-label {
+    font-size: 0.85rem !important;
+    color: #94a3b8 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05rem !important;
+}
+
+/* Streamlit Button overriding */
+.stButton>button {
+    background: linear-gradient(135deg, #8b5cf6 0%, #4facfe 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 12px 30px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    width: 100% !important;
+}
+
+.stButton>button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5) !important;
+    color: #ffffff !important;
+}
+
+.stButton>button:active {
+    transform: translateY(1px) !important;
+}
+
+/* Prediction Result Cards */
+.result-card-real {
+    border-left: 6px solid #10b981 !important;
+    background: rgba(16, 185, 129, 0.06) !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    border: 1px solid rgba(16, 185, 129, 0.15) !important;
+    border-left-width: 6px !important;
+    margin-top: 15px !important;
+}
+
+.result-card-fake {
+    border-left: 6px solid #ef4444 !important;
+    background: rgba(239, 68, 68, 0.06) !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    border: 1px solid rgba(239, 68, 68, 0.15) !important;
+    border-left-width: 6px !important;
+    margin-top: 15px !important;
+}
+
+/* Risk meter styling elements */
+.risk-meter-container {
+    height: 10px !important;
+    width: 100% !important;
+    border-radius: 5px !important;
+    background: #334155 !important;
+    margin: 10px 0 !important;
+    overflow: hidden !important;
+}
+
+.risk-meter-fill {
+    height: 100% !important;
+    border-radius: 5px !important;
+    transition: width 0.5s ease-in-out !important;
+}
+
+.risk-low { background: #10b981 !important; }
+.risk-medium { background: #f59e0b !important; }
+.risk-high { background: #ef4444 !important; }
+
+/* Custom metrics components */
+.stMetric {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 12px !important;
+    padding: 12px 18px !important;
+}
+
+/* Markdown modifications */
+p, li {
+    font-size: 1.05rem !important;
+    line-height: 1.6 !important;
+    color: #cbd5e1 !important;
+}
+
+/* Sidebar footer and slow pulse heart animation */
+.sidebar-footer {
+    margin-top: 150px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding-top: 15px !important;
+    text-align: center !important;
+    font-size: 0.85rem !important;
+    color: #64748b !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+.heart-pulse {
+    display: inline-block !important;
+    color: #ef4444 !important;
+    animation: heartbeat 2.5s infinite ease-in-out !important;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.25); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.25); }
+    70% { transform: scale(1); }
+}
+
