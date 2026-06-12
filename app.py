@@ -28,6 +28,69 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Secure model downloader from Hugging Face Hub (for Streamlit Cloud deployment)
+def download_models_from_hf():
+    """Downloads models from Hugging Face if they are missing locally."""
+    repo_id = st.secrets.get("HF_REPO_ID")
+    token = st.secrets.get("HF_TOKEN")
+    
+    if not repo_id:
+        # If no HF_REPO_ID is set in secrets, we skip downloading (uses local files)
+        return
+
+    # Check if files exist, and download if missing
+    from huggingface_hub import hf_hub_download, snapshot_download
+    
+    models_dir = os.path.join(BASE_DIR, "models")
+    os.makedirs(models_dir, exist_ok=True)
+    
+    # 1. Download metadata and pkl/pt files if missing
+    files_to_download = [
+        "metrics.json",
+        "tfidf_vectorizer.pkl",
+        "lstm_vocab.pkl",
+        "svm_model.pkl",
+        "naive_bayes_model.pkl",
+        "logistic_regression_model.pkl",
+        "random_forest_model.pkl",
+        "lstm_model.pt",
+        "bilstm_model.pt"
+    ]
+    
+    for f in files_to_download:
+        dest_path = os.path.join(models_dir, f)
+        if not os.path.exists(dest_path):
+            with st.spinner(f"Downloading model component {f} from Hugging Face..."):
+                try:
+                    hf_hub_download(
+                        repo_id=repo_id,
+                        filename=f,
+                        local_dir=models_dir,
+                        token=token
+                    )
+                except Exception as e:
+                    st.error(f"Failed to download {f}: {e}")
+                    
+    # 2. Download transformer directories if missing
+    transformer_models = ["bert_model", "distilbert_model"]
+    for model_folder in transformer_models:
+        folder_path = os.path.join(models_dir, model_folder)
+        # Check if folder exists and has files (e.g. model.safetensors)
+        if not os.path.exists(folder_path) or not os.path.exists(os.path.join(folder_path, "model.safetensors")):
+            with st.spinner(f"Downloading transformer model {model_folder}..."):
+                try:
+                    snapshot_download(
+                        repo_id=repo_id,
+                        allow_patterns=f"{model_folder}/*",
+                        local_dir=models_dir,
+                        token=token
+                    )
+                except Exception as e:
+                    st.error(f"Failed to download {model_folder}: {e}")
+
+# Run downloader check
+download_models_from_hf()
+
 # Inject custom CSS stylesheet
 def local_css(file_name):
     with open(file_name) as f:
