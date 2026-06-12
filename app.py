@@ -31,9 +31,13 @@ st.set_page_config(
 # Secure model downloader from Hugging Face Hub (for Streamlit Cloud deployment)
 def download_models_from_hf():
     """Downloads models from Hugging Face if they are missing locally."""
-    repo_id = st.secrets.get("HF_REPO_ID")
-    token = st.secrets.get("HF_TOKEN")
-    
+    try:
+        repo_id = st.secrets.get("HF_REPO_ID")
+        token = st.secrets.get("HF_TOKEN")
+    except Exception:
+        repo_id = None
+        token = None
+        
     if not repo_id:
         # If no HF_REPO_ID is set in secrets, we skip downloading (uses local files)
         return
