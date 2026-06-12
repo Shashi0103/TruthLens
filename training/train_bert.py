@@ -15,7 +15,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from nlp.preprocess import clean_html
 
 # Paths
-MODELS_DIR = "c:/Users/shash/Documents/FakeOrRealNews/models"
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+MODELS_DIR = os.path.join(BASE_DIR, "models")
 METRICS_PATH = os.path.join(MODELS_DIR, "metrics.json")
 BERT_SAVE_DIR = os.path.join(MODELS_DIR, "bert_model")
 DISTILBERT_SAVE_DIR = os.path.join(MODELS_DIR, "distilbert_model")
@@ -57,8 +58,8 @@ class NewsDataset(Dataset):
 
 def load_data(quick_mode=True):
     print("Loading data from CSVs...")
-    fake_df = pd.read_csv("c:/Users/shash/Documents/FakeOrRealNews/dataset/fake.csv")
-    real_df = pd.read_csv("c:/Users/shash/Documents/FakeOrRealNews/dataset/real.csv")
+    fake_df = pd.read_csv(os.path.join(BASE_DIR, "dataset/fake.csv"))
+    real_df = pd.read_csv(os.path.join(BASE_DIR, "dataset/real.csv"))
     
     fake_df['label'] = 0
     real_df['label'] = 1

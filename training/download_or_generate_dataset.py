@@ -4,7 +4,8 @@ import pandas as pd
 import requests
 
 # Targets
-DATASET_DIR = "c:/Users/shash/Documents/FakeOrRealNews/dataset"
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+DATASET_DIR = os.path.join(BASE_DIR, "dataset")
 FAKE_PATH = os.path.join(DATASET_DIR, "fake.csv")
 REAL_PATH = os.path.join(DATASET_DIR, "real.csv")
 

@@ -13,7 +13,8 @@ import plotly.graph_objects as go
 import joblib
 
 # Setup path to import local modules
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(BASE_DIR)
 from nlp.preprocess import preprocess_text, SimpleTokenizer
 from scraper.news_scraper import scrape_news_url
 
@@ -33,7 +34,7 @@ def local_css(file_name):
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 try:
-    local_css("c:/Users/shash/Documents/FakeOrRealNews/custom_style.css")
+    local_css(os.path.join(BASE_DIR, "custom_style.css"))
 except Exception as e:
     st.warning(f"Could not load custom styles: {e}")
 
@@ -42,7 +43,7 @@ except Exception as e:
 # ---------------------------------------------------------
 def load_metrics():
     """Loads metrics.json. Always reads latest values (no cache)."""
-    path = "c:/Users/shash/Documents/FakeOrRealNews/models/metrics.json"
+    path = os.path.join(BASE_DIR, "models/metrics.json")
     if os.path.exists(path):
         try:
             with open(path, "r") as f:
@@ -69,8 +70,8 @@ def load_metrics():
 @st.cache_data
 def load_datasets_for_viz():
     """Loads and caches the raw datasets for dashboard visualizations."""
-    fake_path = "c:/Users/shash/Documents/FakeOrRealNews/dataset/fake.csv"
-    real_path = "c:/Users/shash/Documents/FakeOrRealNews/dataset/real.csv"
+    fake_path = os.path.join(BASE_DIR, "dataset/fake.csv")
+    real_path = os.path.join(BASE_DIR, "dataset/real.csv")
     if os.path.exists(fake_path) and os.path.exists(real_path):
         fake = pd.read_csv(fake_path)
         real = pd.read_csv(real_path)
@@ -83,9 +84,9 @@ def load_datasets_for_viz():
 @st.cache_resource
 def load_ml_model(model_name):
     """Loads TF-IDF vectorizer and specific ML model."""
-    tfidf = joblib.load("c:/Users/shash/Documents/FakeOrRealNews/models/tfidf_vectorizer.pkl")
+    tfidf = joblib.load(os.path.join(BASE_DIR, "models/tfidf_vectorizer.pkl"))
     model_filename = model_name.lower().replace(" ", "_") + "_model.pkl"
-    model = joblib.load(f"c:/Users/shash/Documents/FakeOrRealNews/models/{model_filename}")
+    model = joblib.load(os.path.join(BASE_DIR, "models", model_filename))
     return tfidf, model
 
 @st.cache_resource
@@ -96,14 +97,14 @@ def load_lstm_model(model_name):
     from training.train_lstm import LSTMClassifier
     from nlp.preprocess import SimpleTokenizer
     
-    tokenizer = joblib.load("c:/Users/shash/Documents/FakeOrRealNews/models/lstm_vocab.pkl")
+    tokenizer = joblib.load(os.path.join(BASE_DIR, "models/lstm_vocab.pkl"))
     vocab_size = len(tokenizer.word2idx)
     
     bidirectional = (model_name == "Bi-LSTM")
     model = LSTMClassifier(vocab_size, embedding_dim=64, hidden_dim=64, bidirectional=bidirectional)
     
     model_filename = "bilstm_model.pt" if bidirectional else "lstm_model.pt"
-    model_path = f"c:/Users/shash/Documents/FakeOrRealNews/models/{model_filename}"
+    model_path = os.path.join(BASE_DIR, "models", model_filename)
     model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
     model.eval()
     return tokenizer, model
@@ -114,12 +115,12 @@ def load_transformer_model(model_name):
     import torch
     if model_name == "BERT":
         from transformers import BertTokenizer, BertForSequenceClassification
-        save_dir = "c:/Users/shash/Documents/FakeOrRealNews/models/bert_model"
+        save_dir = os.path.join(BASE_DIR, "models/bert_model")
         tokenizer = BertTokenizer.from_pretrained(save_dir)
         model = BertForSequenceClassification.from_pretrained(save_dir)
     else:
         from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
-        save_dir = "c:/Users/shash/Documents/FakeOrRealNews/models/distilbert_model"
+        save_dir = os.path.join(BASE_DIR, "models/distilbert_model")
         tokenizer = DistilBertTokenizer.from_pretrained(save_dir)
         model = DistilBertForSequenceClassification.from_pretrained(save_dir)
     model.eval()
@@ -366,9 +367,9 @@ def generate_pdf_report(article_title, preview_text, prediction, confidence, aut
     pdf_data = pdf_buffer.getvalue()
     
     # Also save to report directory
-    os.makedirs("c:/Users/shash/Documents/FakeOrRealNews/reports", exist_ok=True)
+    os.makedirs(os.path.join(BASE_DIR, "reports"), exist_ok=True)
     report_filename = f"report_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
-    with open(f"c:/Users/shash/Documents/FakeOrRealNews/reports/{report_filename}", "wb") as f:
+    with open(os.path.join(BASE_DIR, "reports", report_filename), "wb") as f:
         f.write(pdf_data)
         
     return pdf_data
