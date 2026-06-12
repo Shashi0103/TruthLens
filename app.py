@@ -512,7 +512,10 @@ if page == "Home":
             </div>
         </div>
         """,
-        unsafe_allow_htm    # Load raw datasets for visualizations (or check precomputed)
+        unsafe_allow_html=True
+    )
+    
+    # Load raw datasets for visualizations (or check precomputed)
     fake_df, real_df = load_datasets_for_viz()
     viz_data = metadata.get("viz_data", None)
     
