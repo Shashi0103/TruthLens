@@ -5,11 +5,25 @@
         "recall": 0.93,
         "f1_score": 0.92,
         "confusion_matrix": [
-            [46, 4],
-            [4, 46]
+            [
+                46,
+                4
+            ],
+            [
+                4,
+                46
+            ]
         ],
-        "fpr": [0.0, 0.08, 1.0],
-        "tpr": [0.0, 0.92, 1.0],
+        "fpr": [
+            0.0,
+            0.08,
+            1.0
+        ],
+        "tpr": [
+            0.0,
+            0.92,
+            1.0
+        ],
         "auc": 0.95,
         "is_transformer": false,
         "is_deep_learning": false
@@ -20,19 +34,57 @@
         "recall": 0.64,
         "f1_score": 0.63,
         "confusion_matrix": [
-            [31, 19],
-            [18, 32]
+            [
+                31,
+                19
+            ],
+            [
+                18,
+                32
+            ]
         ],
-        "fpr": [0.0, 0.37, 1.0],
-        "tpr": [0.0, 0.64, 1.0],
+        "fpr": [
+            0.0,
+            0.37,
+            1.0
+        ],
+        "tpr": [
+            0.0,
+            0.64,
+            1.0
+        ],
         "auc": 0.67,
         "is_transformer": false,
         "is_deep_learning": true,
         "history": {
-            "train_loss": [0.69, 0.64, 0.60, 0.56, 0.52],
-            "val_loss": [0.70, 0.66, 0.63, 0.61, 0.58],
-            "train_acc": [0.51, 0.56, 0.59, 0.62, 0.65],
-            "val_acc": [0.52, 0.55, 0.57, 0.60, 0.63]
+            "train_loss": [
+                0.69,
+                0.64,
+                0.6,
+                0.56,
+                0.52
+            ],
+            "val_loss": [
+                0.7,
+                0.66,
+                0.63,
+                0.61,
+                0.58
+            ],
+            "train_acc": [
+                0.51,
+                0.56,
+                0.59,
+                0.62,
+                0.65
+            ],
+            "val_acc": [
+                0.52,
+                0.55,
+                0.57,
+                0.6,
+                0.63
+            ]
         }
     },
     "Bi-LSTM": {
@@ -41,32 +93,84 @@
         "recall": 0.73,
         "f1_score": 0.72,
         "confusion_matrix": [
-            [36, 14],
-            [14, 36]
+            [
+                36,
+                14
+            ],
+            [
+                14,
+                36
+            ]
         ],
-        "fpr": [0.0, 0.28, 1.0],
-        "tpr": [0.0, 0.72, 1.0],
+        "fpr": [
+            0.0,
+            0.28,
+            1.0
+        ],
+        "tpr": [
+            0.0,
+            0.72,
+            1.0
+        ],
         "auc": 0.76,
         "is_transformer": false,
         "is_deep_learning": true,
         "history": {
-            "train_loss": [0.69, 0.63, 0.57, 0.52, 0.47],
-            "val_loss": [0.70, 0.65, 0.61, 0.58, 0.55],
-            "train_acc": [0.51, 0.58, 0.64, 0.68, 0.73],
-            "val_acc": [0.52, 0.56, 0.61, 0.65, 0.72]
+            "train_loss": [
+                0.69,
+                0.63,
+                0.57,
+                0.52,
+                0.47
+            ],
+            "val_loss": [
+                0.7,
+                0.65,
+                0.61,
+                0.58,
+                0.55
+            ],
+            "train_acc": [
+                0.51,
+                0.58,
+                0.64,
+                0.68,
+                0.73
+            ],
+            "val_acc": [
+                0.52,
+                0.56,
+                0.61,
+                0.65,
+                0.72
+            ]
         }
     },
     "BERT": {
-        "accuracy": 0.70,
+        "accuracy": 0.7,
         "precision": 0.69,
         "recall": 0.71,
-        "f1_score": 0.70,
+        "f1_score": 0.7,
         "confusion_matrix": [
-            [35, 15],
-            [15, 35]
+            [
+                35,
+                15
+            ],
+            [
+                15,
+                35
+            ]
         ],
-        "fpr": [0.0, 0.30, 1.0],
-        "tpr": [0.0, 0.70, 1.0],
+        "fpr": [
+            0.0,
+            0.3,
+            1.0
+        ],
+        "tpr": [
+            0.0,
+            0.7,
+            1.0
+        ],
         "auc": 0.74,
         "is_transformer": true,
         "is_deep_learning": false
@@ -77,11 +181,25 @@
         "recall": 0.96,
         "f1_score": 0.95,
         "confusion_matrix": [
-            [47, 3],
-            [2, 48]
+            [
+                47,
+                3
+            ],
+            [
+                2,
+                48
+            ]
         ],
-        "fpr": [0.0, 0.06, 1.0],
-        "tpr": [0.0, 0.96, 1.0],
+        "fpr": [
+            0.0,
+            0.06,
+            1.0
+        ],
+        "tpr": [
+            0.0,
+            0.96,
+            1.0
+        ],
         "auc": 0.98,
         "is_transformer": true,
         "is_deep_learning": false
@@ -91,6 +209,174 @@
         "best_model_accuracy": 0.95,
         "dataset_size": 6335,
         "num_real": 3171,
-        "num_fake": 3164
+        "num_fake": 3164,
+        "viz_data": {
+            "subject_counts": {
+                "Fake": {
+                    "Health": 479,
+                    "Government News": 461,
+                    "World News": 458,
+                    "Science & Tech": 453,
+                    "Middle East": 446,
+                    "Politics": 445,
+                    "US News": 422
+                },
+                "Real": {
+                    "Middle East": 469,
+                    "World News": 469,
+                    "US News": 458,
+                    "Government News": 454,
+                    "Health": 445,
+                    "Politics": 444,
+                    "Science & Tech": 432
+                }
+            },
+            "source_counts": {
+                "Fake": {
+                    "The Onion": 483,
+                    "Daily Buzz": 463,
+                    "Activist Post": 460,
+                    "Political Insider": 454,
+                    "Freedom Daily": 443,
+                    "Neon Nettle": 434,
+                    "Infowars": 427
+                },
+                "Real": {
+                    "Washington Post": 484,
+                    "NPR": 465,
+                    "CNN": 454,
+                    "The New York Times": 454,
+                    "BBC News": 443,
+                    "Associated Press": 439,
+                    "Reuters": 432
+                }
+            },
+            "word_frequencies": {
+                "Fake": [
+                    [
+                        "trump",
+                        876
+                    ],
+                    [
+                        "clinton",
+                        577
+                    ],
+                    [
+                        "people",
+                        540
+                    ],
+                    [
+                        "would",
+                        485
+                    ],
+                    [
+                        "hillary",
+                        449
+                    ],
+                    [
+                        "obama",
+                        369
+                    ],
+                    [
+                        "like",
+                        355
+                    ],
+                    [
+                        "world",
+                        353
+                    ],
+                    [
+                        "time",
+                        335
+                    ],
+                    [
+                        "election",
+                        307
+                    ],
+                    [
+                        "could",
+                        299
+                    ],
+                    [
+                        "also",
+                        298
+                    ],
+                    [
+                        "donald",
+                        296
+                    ],
+                    [
+                        "state",
+                        289
+                    ],
+                    [
+                        "government",
+                        280
+                    ]
+                ],
+                "Real": [
+                    [
+                        "trump",
+                        1495
+                    ],
+                    [
+                        "clinton",
+                        1447
+                    ],
+                    [
+                        "would",
+                        751
+                    ],
+                    [
+                        "state",
+                        670
+                    ],
+                    [
+                        "campaign",
+                        660
+                    ],
+                    [
+                        "obama",
+                        619
+                    ],
+                    [
+                        "president",
+                        604
+                    ],
+                    [
+                        "people",
+                        604
+                    ],
+                    [
+                        "also",
+                        515
+                    ],
+                    [
+                        "party",
+                        482
+                    ],
+                    [
+                        "republican",
+                        481
+                    ],
+                    [
+                        "sanders",
+                        430
+                    ],
+                    [
+                        "states",
+                        395
+                    ],
+                    [
+                        "time",
+                        389
+                    ],
+                    [
+                        "could",
+                        384
+                    ]
+                ]
+            }
+        }
     }
 }

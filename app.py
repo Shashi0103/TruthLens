@@ -512,13 +512,13 @@ if page == "Home":
             </div>
         </div>
         """,
-        unsafe_allow_html=True
-    )
-    
-    # Load raw datasets for visualizations
+        unsafe_allow_htm    # Load raw datasets for visualizations (or check precomputed)
     fake_df, real_df = load_datasets_for_viz()
+    viz_data = metadata.get("viz_data", None)
     
-    if fake_df is not None and real_df is not None:
+    has_data = (fake_df is not None and real_df is not None) or (viz_data is not None)
+    
+    if has_data:
         col1, col2 = st.columns(2)
         
         with col1:
@@ -543,16 +543,37 @@ if page == "Home":
         with col2:
             with st.container(border=True):
                 st.markdown("### Fake vs Real News by Category", unsafe_allow_html=True)
-                # Concat datasets for categorization plot
-                comb_df = pd.concat([fake_df.head(1000), real_df.head(1000)])
-                fig_bar = px.histogram(
-                    comb_df,
-                    x="subject",
-                    color="label",
-                    barmode="group",
-                    color_discrete_map={"Real": "#10b981", "Fake": "#ef4444"},
-                    labels={"subject": "Subject Category", "count": "Article Count"}
-                )
+                
+                if fake_df is not None and real_df is not None:
+                    # Concat datasets for categorization plot
+                    comb_df = pd.concat([fake_df.head(1000), real_df.head(1000)])
+                    fig_bar = px.histogram(
+                        comb_df,
+                        x="subject",
+                        color="label",
+                        barmode="group",
+                        color_discrete_map={"Real": "#10b981", "Fake": "#ef4444"},
+                        labels={"subject": "Subject Category", "count": "Article Count"}
+                    )
+                else:
+                    fake_subjects = viz_data.get("subject_counts", {}).get("Fake", {})
+                    real_subjects = viz_data.get("subject_counts", {}).get("Real", {})
+                    rows = []
+                    for sub, count in fake_subjects.items():
+                        rows.append({"subject": sub, "count": count, "label": "Fake"})
+                    for sub, count in real_subjects.items():
+                        rows.append({"subject": sub, "count": count, "label": "Real"})
+                    comb_df = pd.DataFrame(rows)
+                    fig_bar = px.bar(
+                        comb_df,
+                        x="subject",
+                        y="count",
+                        color="label",
+                        barmode="group",
+                        color_discrete_map={"Real": "#10b981", "Fake": "#ef4444"},
+                        labels={"subject": "Subject Category", "count": "Article Count"}
+                    )
+                    
                 fig_bar.update_layout(
                     paper_bgcolor='rgba(0,0,0,0)',
                     plot_bgcolor='rgba(0,0,0,0)',
@@ -570,23 +591,33 @@ if page == "Home":
             with st.container(border=True):
                 st.markdown("### Top Word Frequencies", unsafe_allow_html=True)
                 
-                # Simple whitespace tokenization from a subset for fast plotting
-                all_text_fake = " ".join(fake_df.head(100)['text'].fillna('').values).lower()
-                all_text_real = " ".join(real_df.head(100)['text'].fillna('').values).lower()
-                
-                # Filter stopwords
-                from nlp.preprocess import STOPWORDS
-                fake_words = [w for w in all_text_fake.split() if w.isalnum() and w not in STOPWORDS and len(w) > 3]
-                real_words = [w for w in all_text_real.split() if w.isalnum() and w not in STOPWORDS and len(w) > 3]
-                
-                f_counter = Counter(fake_words).most_common(10)
-                r_counter = Counter(real_words).most_common(10)
-                
-                w_df = pd.DataFrame(
-                    [(w, c, "Fake") for w, c in f_counter] + [(w, c, "Real") for w, c in r_counter],
-                    columns=["Word", "Frequency", "Class"]
-                )
-                
+                if fake_df is not None and real_df is not None:
+                    # Simple whitespace tokenization from a subset for fast plotting
+                    all_text_fake = " ".join(fake_df.head(100)['text'].fillna('').values).lower()
+                    all_text_real = " ".join(real_df.head(100)['text'].fillna('').values).lower()
+                    
+                    # Filter stopwords
+                    from nlp.preprocess import STOPWORDS
+                    fake_words = [w for w in all_text_fake.split() if w.isalnum() and w not in STOPWORDS and len(w) > 3]
+                    real_words = [w for w in all_text_real.split() if w.isalnum() and w not in STOPWORDS and len(w) > 3]
+                    
+                    f_counter = Counter(fake_words).most_common(10)
+                    r_counter = Counter(real_words).most_common(10)
+                    
+                    w_df = pd.DataFrame(
+                        [(w, c, "Fake") for w, c in f_counter] + [(w, c, "Real") for w, c in r_counter],
+                        columns=["Word", "Frequency", "Class"]
+                    )
+                else:
+                    fake_words_pre = viz_data.get("word_frequencies", {}).get("Fake", [])
+                    real_words_pre = viz_data.get("word_frequencies", {}).get("Real", [])
+                    rows = []
+                    for w, c in fake_words_pre[:10]:
+                        rows.append({"Word": w, "Frequency": c, "Class": "Fake"})
+                    for w, c in real_words_pre[:10]:
+                        rows.append({"Word": w, "Frequency": c, "Class": "Real"})
+                    w_df = pd.DataFrame(rows)
+                    
                 fig_words = px.bar(
                     w_df,
                     x="Frequency",
@@ -608,15 +639,25 @@ if page == "Home":
             with st.container(border=True):
                 st.markdown("### News Source Distribution (Top 10)", unsafe_allow_html=True)
                 
-                sources_fake = fake_df['source'].value_counts().head(5)
-                sources_real = real_df['source'].value_counts().head(5)
-                
-                s_df = pd.DataFrame({
-                    "Source": list(sources_fake.index) + list(sources_real.index),
-                    "Articles Count": list(sources_fake.values) + list(sources_real.values),
-                    "Category": ["Fake"]*len(sources_fake) + ["Real"]*len(sources_real)
-                })
-                
+                if fake_df is not None and real_df is not None:
+                    sources_fake = fake_df['source'].value_counts().head(5)
+                    sources_real = real_df['source'].value_counts().head(5)
+                    
+                    s_df = pd.DataFrame({
+                        "Source": list(sources_fake.index) + list(sources_real.index),
+                        "Articles Count": list(sources_fake.values) + list(sources_real.values),
+                        "Category": ["Fake"]*len(sources_fake) + ["Real"]*len(sources_real)
+                    })
+                else:
+                    fake_sources_pre = viz_data.get("source_counts", {}).get("Fake", {})
+                    real_sources_pre = viz_data.get("source_counts", {}).get("Real", {})
+                    rows = []
+                    for src, count in list(fake_sources_pre.items())[:5]:
+                        rows.append({"Source": src, "Articles Count": count, "Category": "Fake"})
+                    for src, count in list(real_sources_pre.items())[:5]:
+                        rows.append({"Source": src, "Articles Count": count, "Category": "Real"})
+                    s_df = pd.DataFrame(rows)
+                    
                 fig_source = px.bar(
                     s_df,
                     x="Source",
@@ -630,7 +671,6 @@ if page == "Home":
                     font_color="#e2e8f0",
                 )
                 st.plotly_chart(fig_source, use_container_width=True)
-
     else:
         st.warning("Please complete model training to index datasets and metrics properly.")
         
