@@ -95,6 +95,11 @@ def download_models_from_hf():
 # Run downloader check
 download_models_from_hf()
 
+# Check if core model files are missing
+models_missing = not os.path.exists(os.path.join(BASE_DIR, "models/tfidf_vectorizer.pkl"))
+if models_missing:
+    st.sidebar.error("⚠️ Model files are missing!")
+    
 # Inject custom CSS stylesheet
 def local_css(file_name):
     with open(file_name) as f:
@@ -481,7 +486,26 @@ if page == "Home":
     st.markdown("<div style='color: #64748b; font-size: 1.1rem; margin-top: -1.5rem; margin-bottom: 2rem; font-family: \"Inter\", sans-serif;'>Utilizing state-of-the-art models: <b>SVM, LSTM, Bi-LSTM, BERT, and DistilBERT</b></div>", unsafe_allow_html=True)
     
     # Hero Subtitle quote
-    st.info("Verify information before you trust it.")
+    if models_missing:
+        st.error("""
+            ### ⚠️ Trained Models Missing on Server
+            The app cannot run news verification because your trained model files are not found.
+            
+            **How to resolve this securely:**
+            1. Open a terminal locally on your computer and run:
+               ```bash
+               python upload_models_to_hf.py
+               ```
+               Follow the prompts to upload your models to a **Private** Hugging Face repository.
+            2. Go to your **Streamlit Cloud Dashboard -> App Settings -> Secrets**, and add:
+               ```toml
+               HF_REPO_ID = "your-username/your-repo-name"
+               HF_TOKEN = "your-huggingface-read-token"
+               ```
+               Then reboot/re-deploy the app.
+        """)
+    else:
+        st.info("Verify information before you trust it.")
     
     # Retrieve metrics metadata
     metadata = metrics.get("metadata", {})
@@ -700,6 +724,15 @@ if page == "Home":
 elif page == "Detect News":
     st.markdown("<h1 class='hero-title'>Verify News</h1>", unsafe_allow_html=True)
     st.markdown("<p class='hero-subtitle'>Classify authenticity using Machine Learning & Transformers</p>", unsafe_allow_html=True)
+    
+    if models_missing:
+        st.error("""
+            ### ⚠️ Predictions Disabled: Models Missing
+            TruthLens cannot perform news verification because the trained model files (like TF-IDF vectorizer, LSTM, BERT, etc.) were not found.
+            
+            Please upload your models to Hugging Face and configure the secrets in your Streamlit Cloud dashboard. See the **Home** page for detailed setup instructions.
+        """)
+        st.stop()
     
     all_models = [
         "Select the Model First",
