@@ -485,6 +485,21 @@ if page == "Home":
     st.markdown("<div class='hero-subtitle'>ML-Powered Fake News Detection System</div>", unsafe_allow_html=True)
     st.markdown("<div style='color: #64748b; font-size: 1.1rem; margin-top: -1.5rem; margin-bottom: 2rem; font-family: \"Inter\", sans-serif;'>Utilizing state-of-the-art models: <b>SVM, LSTM, Bi-LSTM, BERT, and DistilBERT</b></div>", unsafe_allow_html=True)
     
+    # Ticker Tape linear scrolling animation
+    st.markdown(
+        """
+        <div class="ticker-wrap">
+            <div class="ticker">
+                <div class="ticker-item"><span class="ticker-highlight-fake">⚠️ WARNING:</span> Don't trust the news from an unverified news source.</div>
+                <div class="ticker-item"><span class="ticker-highlight-truth">🔍 TRUTHLENS:</span> Detect news fakeness and confirm the truth.</div>
+                <div class="ticker-item"><span class="ticker-highlight-fake">⚠️ WARNING:</span> Don't trust the news from an unverified news source.</div>
+                <div class="ticker-item"><span class="ticker-highlight-truth">🔍 TRUTHLENS:</span> Detect news fakeness and confirm the truth.</div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
     # Hero Subtitle quote
     if models_missing:
         st.error("""

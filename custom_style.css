@@ -224,3 +224,55 @@ p, li {
     70% { transform: scale(1); }
 }
 
+/* Linear scrolling news ticker tape */
+.ticker-wrap {
+    width: 100% !important;
+    overflow: hidden !important;
+    background: rgba(17, 20, 32, 0.5) !important;
+    backdrop-filter: blur(8px) !important;
+    border-top: 1px solid rgba(139, 92, 246, 0.2) !important;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.2) !important;
+    padding: 10px 0 !important;
+    margin-bottom: 25px !important;
+    position: relative !important;
+    border-radius: 8px !important;
+}
+
+.ticker {
+    display: inline-block !important;
+    white-space: nowrap !important;
+    padding-left: 100% !important;
+    animation: ticker 35s linear infinite !important;
+}
+
+.ticker-item {
+    display: inline-block !important;
+    padding: 0 3rem !important;
+    font-size: 0.95rem !important;
+    color: #e2e8f0 !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+}
+
+.ticker-highlight-fake {
+    color: #ef4444 !important;
+    font-weight: 800 !important;
+}
+
+.ticker-highlight-truth {
+    color: #00f2fe !important;
+    font-weight: 800 !important;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+
