@@ -490,9 +490,9 @@ if page == "Home":
         """
         <div class="ticker-wrap">
             <div class="ticker">
-                <div class="ticker-item"><span class="ticker-highlight-fake">⚠️ WARNING:</span> Don't trust the news from an unverified news source.</div>
+                <div class="ticker-item"><span class="ticker-highlight-fake">🚨 BREAKING NEWS:</span> Don't trust the news from an unverified news source.</div>
                 <div class="ticker-item"><span class="ticker-highlight-truth">🔍 TRUTHLENS:</span> Detect news fakeness and confirm the truth.</div>
-                <div class="ticker-item"><span class="ticker-highlight-fake">⚠️ WARNING:</span> Don't trust the news from an unverified news source.</div>
+                <div class="ticker-item"><span class="ticker-highlight-fake">🚨 BREAKING NEWS:</span> Don't trust the news from an unverified news source.</div>
                 <div class="ticker-item"><span class="ticker-highlight-truth">🔍 TRUTHLENS:</span> Detect news fakeness and confirm the truth.</div>
             </div>
         </div>
